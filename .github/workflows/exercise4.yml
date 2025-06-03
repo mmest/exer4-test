@@ -44,7 +44,7 @@ jobs:
         with:
           name: build
       - name: deploy to surge
-        run: npx surge --project ‘.’ --domain http://hurried-earthquake.surge.sh
+        run: npx surge --project ‘/home/runner/work/exer4-test/exer4-test’ --domain http://hurried-earthquake.surge.sh
         env:
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
