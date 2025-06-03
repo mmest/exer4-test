@@ -2,7 +2,9 @@ name: buildfork
 permissions:
   contents: write
 on: 
-  workflow_dispatch:
+  push:
+    branches: 
+      - main
 
 jobs:
   build:
@@ -35,4 +37,14 @@ jobs:
     needs: build
     environment:
       name: production
-      url: http://hurried-earthquake.surge.sh  
+      url: http://hurried-earthquake.surge.sh
+    steps:
+      - name: Download the Build Artifact
+        uses: actions/download-artifact@v4.3.0
+        with:
+          name: build
+      - name: deploy to surge
+        run: npx surge --project ‘.’ --domain http://hurried-earthquake.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
